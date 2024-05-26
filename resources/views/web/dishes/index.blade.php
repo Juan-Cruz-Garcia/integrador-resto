@@ -1,29 +1,56 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>restaurante</title>
-</head>
-<body>
-    
-    <main class="container">
-        <div class="row">
-            <h1>platos</h1>
-            <col-md-12>
-                <ul>
-                    <li><a href="{{  route('web.dishes.show', ['id'=>1]) }}">milanesa con pure</a></li>
-                    <li><a href="{{  route('web.dishes.show', ['id'=>2]) }}">pastel de papa</a></li>
-                    <li><a href="{{  route('web.dishes.show', ['id'=>3]) }}">chorizo a la pomarola</a></li>
-                    <li><a href="{{  route('web.dishes.show', ['id'=>4]) }}">tacos al pastor</a></li>
-                    <li><a href="{{  route('web.dishes.show', ['id'=>5]) }}">ñoquis de papa</a></li>
-                    <li><a href="{{  route('web.dishes.show', ['id'=>6]) }}">ñoquis de calabaza</a></li>
-                    <li><a href="{{  route('web.dishes.show', ['id'=>7]) }}">empanadas</a></li>
-                    <li><a href="{{  route('web.dishes.show', ['id'=>8]) }}">revuelto gramajo</a></li>
-                </ul>
-            </col-md-12>
-        </div>
-    </main>
+  @include('web.partials.head')
+<body class="bg-secondary">
+  @include('web.partials.nav')
+  <main class="container mb-3">
+    <h1 class="text-center my-5">Menú del Restaurante</h1>
+    <ul class="list-group">
+      <div class="row">
+        <li class="col-md-6 list-group-item border rounded p-3">
+          <div class="row">
+            <div class="col-md-3">
+              <img src="https://via.placeholder.com/200" alt="Producto 1" class="img-fluid">
+            </div>
+            <div class="col-md-9">
+              <h2>Nombre del Producto 1</h2>
+              <p>Descripción breve del producto 1.</p>
+              <p><strong>Precio:</strong> $10.00</p>
+              <a href="{{ route('web.dishes.show', ['id'=>8]) }}" class="btn btn-primary">Ver Detalles</a>
+            </div>
+          </div>
+        </li>
+        <li class="col-md-6 list-group-item border rounded p-3">
+          <div class="row">
+            <div class="col-md-3">
+              <img src="https://via.placeholder.com/200" alt="Producto 2" class="img-fluid">
+            </div>
+            <div class="col-md-9">
+              <h2>Nombre del Producto 2</h2>
+              <p>Descripción breve del producto 2.</p>
+              <p><strong>Precio:</strong> $12.00</p>
+              <button class="btn btn-primary">Agregar al carrito</button>
+            </div>
+          </div>
+        </li>
+      </div>
+      <div class="row">
+        <li class="col-md-6 list-group-item border rounded p-3">
+          <div class="row">
+            <div class="col-md-3">
+              <img src="https://via.placeholder.com/200" alt="Producto 3" class="img-fluid">
+            </div>
+            <div class="col-md-9">
+              <h2>Nombre del Producto 3</h2>
+              <p>Descripción breve del producto 3.</p>
+              <p><strong>Precio:</strong> $8.00</p>
+              <button class="btn btn-primary">Agregar al carrito</button>
+            </div>
+          </div>
+        </li>
+      </div>
+    </ul>
+  </main>
+@include('web.partials.footer')
 </body>
 </html>
