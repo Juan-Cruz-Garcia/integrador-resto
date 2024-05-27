@@ -6,49 +6,50 @@
   <main class="container mb-3">
     <h1 class="text-center my-5">Menú del Restaurante</h1>
     <ul class="list-group">
-      <div class="row">
-        <li class="col-md-6 list-group-item border rounded p-3">
-          <div class="row">
-            <div class="col-md-3">
-              <img src="https://via.placeholder.com/200" alt="Producto 1" class="img-fluid">
+      @if ($dishes->count() > 0)
+          @foreach ($dishes as $dish)
+          <li class="col-md-12 list-group-item border rounded p-3 m-1">
+            <div class="row">
+              <div class="col-md-3">
+                <img src="{{ $dish->image }}?={{ $dish->id }}" alt="{{ $dish->image_alt }}" class="img-fluid">
+              </div>
+              <div class="col-md-9">
+                <h2>{{ $dish->name }}</h2>
+                <p>{{ $dish->description }}</p>
+                <p><strong>${{ $dish->price }}</strong></p>
+                <a href="{{ route('web.dishes.show', $dish->id) }}" class="btn btn-primary">Ver Detalles</a>
+              </div>
             </div>
-            <div class="col-md-9">
-              <h2>Nombre del Producto 1</h2>
-              <p>Descripción breve del producto 1.</p>
-              <p><strong>Precio:</strong> $10.00</p>
-              <a href="{{ route('web.dishes.show', ['id'=>8]) }}" class="btn btn-primary">Ver Detalles</a>
-            </div>
-          </div>
-        </li>
-        <li class="col-md-6 list-group-item border rounded p-3">
-          <div class="row">
-            <div class="col-md-3">
-              <img src="https://via.placeholder.com/200" alt="Producto 2" class="img-fluid">
-            </div>
-            <div class="col-md-9">
-              <h2>Nombre del Producto 2</h2>
-              <p>Descripción breve del producto 2.</p>
-              <p><strong>Precio:</strong> $12.00</p>
-              <button class="btn btn-primary">Agregar al carrito</button>
-            </div>
-          </div>
-        </li>
-      </div>
-      <div class="row">
-        <li class="col-md-6 list-group-item border rounded p-3">
-          <div class="row">
-            <div class="col-md-3">
-              <img src="https://via.placeholder.com/200" alt="Producto 3" class="img-fluid">
-            </div>
-            <div class="col-md-9">
-              <h2>Nombre del Producto 3</h2>
-              <p>Descripción breve del producto 3.</p>
-              <p><strong>Precio:</strong> $8.00</p>
-              <button class="btn btn-primary">Agregar al carrito</button>
-            </div>
-          </div>
-        </li>
-      </div>
+          </li>
+          @endforeach
+        @else
+          <p class="text-center">No se encontraron productos.</p>
+        @endif
+        <div class="pagination justify-content-center mt-4">
+          <ul class="pagination">
+    
+            @if ($dishes->currentPage() > 1)
+              <li class="page-item">
+                <a class="page-link" href="{{ $dishes->previousPageUrl() }}">«</a>
+              </li>
+            @endif
+    
+            @for ($i = 1; $i <= $dishes->lastPage(); $i++)
+              <li class="page-item {{ $i === $dishes->currentPage() ? 'active' : '' }}">
+                <a class="page-link" href="{{ $dishes->url($i) }}">{{ $i }}</a>
+              </li>
+            @endfor
+    
+            @if ($dishes->hasMorePages())
+              <li class="page-item">
+                <a class="page-link" href="{{ $dishes->nextPageUrl() }}">»</a>
+              </li>
+            @endif
+    
+          </ul>
+        </div>
+    
+        <p class="text-muted text-center mt-2">Mostrando página {{ $dishes->currentPage() }} de {{ $dishes->lastPage() }}</p>
     </ul>
   </main>
 @include('web.partials.footer')

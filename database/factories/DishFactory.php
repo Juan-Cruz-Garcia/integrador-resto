@@ -17,11 +17,12 @@ class DishFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => fake()-> sentence(6,true),
+            'name' => fake()-> sentence(6,true),
             'description' => fake()->paragraph(4,true),
             'category_id' => rand(1,4),
             'price' => fake()->randomFloat(2,800,10000),
-            'image' => 'https://loremflickr.com/100/100/hamburger',
+            'image' => 'https://loremflickr.com/150/200/hamburger',
+            'image_alt' => fake() -> sentence(6,true),
             'is_available' => $this->faker->boolean(90),
 
         ];

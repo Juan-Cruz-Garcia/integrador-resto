@@ -1,4 +1,4 @@
-<footer class="bg-dark text-white py-4 text-center">
+<footer class="bg-dark text-white py-4 text-center mt-auto">
   <div class="container">
     <p>&copy; 2024 - Todos los derechos reservados</p>
   </div>
