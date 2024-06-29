@@ -6,12 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\DishController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 
 //-------web-----------
+Route::get('/welcome',[DishController::class,'landingpage'])->name('web.landingpage');
+
 Route::prefix('dishes')->name('web.dishes.')->controller(DishController::class)->group(function () {
     //lista de elementos
     Route::get('/', 'index')->name('index');
