@@ -18,6 +18,15 @@
 @endsection
 
 @section('content')
+@php
+    $categoryNames = [
+        1 => 'Entrada',
+        2 => 'Plato Principal',
+        3 => 'Acompañamiento',
+        4 => 'Postre',
+        5 => 'Bebida',
+    ];
+@endphp
     <div class="container mt-5">
         <table class="table table-striped table-bordered rounded-5">
             <thead class="table-dark">
@@ -37,7 +46,7 @@
                             <td class="align-middle"><img src="{{ $dish->image }}?={{ $dish->id }}" alt="Producto" class="img-thumbnail" style="max-width: 200px; max-height: 250px;"></td>
                             <td class="align-middle">{{ $dish->name }}</td>
                             <td class="align-middle">{{ $dish->description }}</td>
-                            <td class="align-middle">{{ $dish->category_id }}</td>
+                            <td class="align-middle">{{ $categoryNames[$dish->category_id] }}</td>
                             <td class="align-middle">{{ $dish->price }}</td>
                             <td class="align-middle">
                                 <a href="/backoffice/dishes/create/{{ $dish->id }}" class="btn btn-primary btn-sm">Editar</a>
