@@ -8,7 +8,7 @@
     <nav style="--bs-breadcrumb-divider: '{!! $unicodeCode !!}';" aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('backoffice.landingpage') }}">Inicio</a></li>
-            
+
             @if (isset($dish))
                 <li class="breadcrumb-item"><a href="{{ route('backoffice.dishes.index') }}">Platos</a></li>
                 <li class="breadcrumb-item active" aria-current="page">{{ $dish->id }}</li>
@@ -29,8 +29,8 @@
     <div class="container my-5">
         <div class="card rounded-4 shadow bg-body-secondary">
             <form method="POST"
-                action="{{ isset($dish) ? '/backoffice/dishes/update/' . $dish->id : '/backoffice/dishes/create' }}"
-                class="card-body">
+                action="{{ isset($dish) ? '/backoffice/dishes/create/' . $dish->id : '/backoffice/dishes/create' }}"
+                class="card-body" enctype="multipart/form-data">
                 @csrf
                 @if (isset($dish))
                     <input type="hidden" name="id" value="{{ $dish->id }}">
@@ -61,8 +61,8 @@
                         value="{{ isset($dish) ? $dish->price : '' }}">
                 </div>
                 <div class="mb-3">
-                    <label for="image" class="form-label">URL de la Imagen</label>
-                    <input type="text" class="form-control" id="image" name="image"
+                    <label for="image" class="form-label">Imagen</label>
+                    <input type="file" class="form-control" id="image" name="image"
                         value="{{ isset($dish) ? $dish->image : '' }}">
                 </div>
                 <div class="mb-3">

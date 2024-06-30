@@ -27,7 +27,7 @@
           </ul>
       </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Aventurero/a</a>
+          <a class="nav-link" href="#">Aventurero</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Contacto</a>
