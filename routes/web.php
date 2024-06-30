@@ -6,14 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\DishController;
 use Illuminate\Support\Facades\Route;
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
 
 //-------web-----------------
 //landigpage
-Route::get('/welcome',[DishController::class,'landingpage'])->name('web.landingpage');
+Route::get('/',[DishController::class,'landingpage'])->name('web.landingpage');
 
 Route::prefix('dishes')->name('web.dishes.')->controller(DishController::class)->group(function () {
       //unidad
@@ -24,7 +20,7 @@ Route::prefix('dishes')->name('web.dishes.')->controller(DishController::class)-
       Route::get('/categories/{category}', 'index')->name('categories');
  
 });
-
+Route::get('/cart/add',[DishController::class,'cart'])->name('web.cart');
 
 //-------backoffice-----------
 //landingpage
@@ -39,6 +35,6 @@ Route::prefix('backoffice/dishes')->name('backoffice.dishes.')->controller(Backo
     Route::get('/categories/{id}','categories')->name('categories');
     //formulario de creacion y edicion
     Route::get('/create/{id?}', 'create')->name('create');
-    //metodo que crea
+    //envio de formulario de creacion y edicion
     Route::post('/create/{id?}', 'store')->name('create');
 });
