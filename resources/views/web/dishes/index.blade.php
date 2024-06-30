@@ -16,6 +16,15 @@
 @section('title', 'Menú del Restaurante')
 
 @section('content')
+<div><div class="dropdown" style="float: right;">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="orderDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+        Ordenar por
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="orderDropdown">
+        <li><a class="dropdown-item" href="{{ request()->fullUrlWithQuery(['filtro' => 'desc']) }}">Precio de mayor a menor</a></li>
+        <li><a class="dropdown-item" href="{{ request()->fullUrlWithQuery(['filtro' => 'asc']) }}">Precio de menor a mayor</a></li>
+    </ul>
+</div>
     <div class="container mb-3">
         <ul class="list-group">
             @if ($dishes->count() > 0)
@@ -63,4 +72,5 @@
             <p class="text-muted text-center mt-2">Mostrando página {{ $dishes->currentPage() }} de {{ $dishes->lastPage() }}</p>
         </ul>
     </div>
+</div>
 @endsection
