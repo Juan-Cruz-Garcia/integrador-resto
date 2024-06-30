@@ -2,22 +2,22 @@
 @section('title')
     El Refugio del Pecador
 @endsection
-
 @section('custom_title')
     <!-- Hero Section -->
     <section class="d-flex align-items-center text-center bg-image"
-        style="background-image: url('https://via.placeholder.com/1920x1080'); height: 100vh;">
+        style="background-image: url('/storage/fondo.jpg'); background-repeat: no-repeat; background-size: cover; height: 100vh;">
         <div class="container">
-            <h1 class="display-4 text-white">Bienvenido al Refugio del Pecador</h1>
-            <p class="lead text-white">Adéntrate en nuestra taberna, aventurero, y descubre los secretos que aguardan.</p>
-            <a href={{ route('web.dishes.index') }} class="btn btn-primary btn-lg mx-2">Explora</a>
+            <h1 class="display-4 primary">Bienvenido al Refugio del Pecador</h1>
+            <p class="lead primary">Adéntrate en nuestra taberna, aventurero, y descubre los secretos que aguardan.</p>
+            <a href="{{ route('web.dishes.index') }}" class="btn btn-primary btn-lg mx-2">Explora</a>
             <a href="#" class="btn btn-secondary btn-lg mx-2">Contacta</a>
         </div>
     </section>
 @endsection
 
+
 @section('content')
-<!-- Featured Products Section -->
+<!-- prductos destacados -->
 <section class="py-5 bg-white">
     <div class="container">
         <div class="row">
@@ -25,7 +25,7 @@
             @foreach ($randomDishes as $dish)
                 <div class="col-md-4 mb-4">
                     <div class="card">
-                        <img src="{{ $dish->image }}?={{ $dish->id }}" alt="{{ $dish->image_alt }}" class="img-fluid">
+                        <img src="/storage/{{ $dish->image }}" alt="{{ $dish->image_alt }}" class="img-fluid">
                         <div class="card-body">
                             <h5 class="card-title overflow-hidden text-truncate">{{ $dish->name }}</h5>
                             <p class="card-text overflow-hidden text-truncate">{{ $dish->description }}</p>
@@ -42,7 +42,7 @@
 </section>
 
 
-    <!-- Testimonials Section -->
+    <!-- testimonios -->
     <section class="py-5 bg-light">
         <div class="container">
             <div class="text-center mb-5">
