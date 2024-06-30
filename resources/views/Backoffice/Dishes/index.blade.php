@@ -4,10 +4,9 @@
     @php
         $unicodeCode = '&#x' . dechex(mt_rand(0x16A0, 0x16FF)) . ';';
     @endphp
-    <nav  style="--bs-breadcrumb-divider: '{!! $unicodeCode !!}';" aria-label="breadcrumb">
+    <nav style="--bs-breadcrumb-divider: '{!! $unicodeCode !!}';" aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('backoffice.landingpage') }}">panel</a></li>
-   
             <li class="breadcrumb-item active" aria-current="page">platos</li>
         </ol>
     </nav>
@@ -35,6 +34,7 @@
                     <th scope="col">Nombre</th>
                     <th scope="col">Descripción</th>
                     <th scope="col">Categoría</th>
+                    <th scope="col">Disponible</th>
                     <th scope="col">Precio</th>
                     <th scope="col">Acciones</th>
                 </tr>
@@ -47,16 +47,20 @@
                             <td class="align-middle">{{ $dish->name }}</td>
                             <td class="align-middle">{{ $dish->description }}</td>
                             <td class="align-middle">{{ $categoryNames[$dish->category_id] }}</td>
+                            <td class="align-middle">{{ $dish->is_available ? 'Sí' : 'No' }}</td>
                             <td class="align-middle">{{ $dish->price }}</td>
                             <td class="align-middle">
                                 <a href="/backoffice/dishes/create/{{ $dish->id }}" class="btn btn-primary btn-sm">Editar</a>
+                                <a href="{{ route('backoffice.dishes.disponible', $dish->id) }}" class="btn btn-sm {{ $dish->is_available ? 'btn-danger' : 'btn-success' }}">
+                                    {{ $dish->is_available ? 'Desactivar' : 'Activar' }}
+                                </a>
                                 <button class="btn btn-danger btn-sm">Borrar</button>
                             </td>
                         </tr>
                     @endforeach
                 @else
                     <tr>
-                        <td colspan="6" class="text-center">No se encontraron productos.</td>
+                        <td colspan="7" class="text-center">No se encontraron productos.</td>
                     </tr>
                 @endif
             </tbody>

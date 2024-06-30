@@ -1,4 +1,4 @@
-@extends('web.layouts.app')
+@extends('web.layout.app')
 @section('title')
     El Refugio del Pecador
 @endsection

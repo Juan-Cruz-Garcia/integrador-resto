@@ -13,11 +13,22 @@
         <li class="nav-item">
           <a class="nav-link" href="{{ route('web.dishes.index') }}">Platos</a>
         </li>
+         <!-- Menú desplegable Categorías -->
+         <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownCategories" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              Categorías
+          </a>
+          <ul class="dropdown-menu" data-bs-theme="dark" aria-labelledby="navbarDropdownCategories">
+              <!-- Aquí puedes iterar sobre las categorías disponibles -->
+              @foreach ($categories as $category)
+              <li><a class="dropdown-item" href="{{ route('web.dishes.index', ['category' => $category->id]) }}">{{ $category->value }}</a></li>
+          @endforeach
+          
+          </ul>
+      </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Hechizos</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Aventuras</a>
+          <a class="nav-link" href="#">Aventurero/a</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Contacto</a>

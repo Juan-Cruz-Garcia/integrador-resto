@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" >
 @include('web.partials.head')
 
 <body class="bg-secondary min-vh-100">

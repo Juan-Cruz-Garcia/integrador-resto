@@ -1,7 +1,7 @@
-@extends('web.layouts.app')
+@extends('web.layout.app')
 
 @section('breadcrumb')
-    @if ($dish)
+    @if ($dish && $dish->is_available==1)
         @php
             $unicodeCode = '&#x' . dechex(mt_rand(0x16a0, 0x16ff)) . ';';
         @endphp
@@ -16,8 +16,8 @@
 @endsection
 
 @section('content')
-    <main class="container my-5">
-        @if ($dish)
+    <div class="container my-5">
+        @if ($dish && $dish->is_available==1)
             <div class="card mb-3">
                 <div class="row g-0">
                     <div class="col-md-5">
@@ -38,7 +38,7 @@
                 </div>
             </div>
         @else
-            <p class="text-center">Plato no encontrado.</p>
+            <p class="text-center">Plato disponible</p>
         @endif
-    </main>
+    </div>
 @endsection
