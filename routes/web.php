@@ -11,16 +11,22 @@ use Illuminate\Support\Facades\Route;
 // });
 
 
-//-------web-----------
+//-------web-----------------
+//landigpage
 Route::get('/welcome',[DishController::class,'landingpage'])->name('web.landingpage');
 
 Route::prefix('dishes')->name('web.dishes.')->controller(DishController::class)->group(function () {
-    //lista de elementos
+      //unidad
+    Route::get('/show/{id}', 'show')->name('show');
+     //lista de elementos
     Route::get('/', 'index')->name('index');
-    //unidad
-    Route::get('/{id}', 'show')->name('show');
+      // Lista de elementos por categoría
+      Route::get('/categories/{category}', 'index')->name('categories');
+ 
 });
-//-------backoffice---
+
+
+//-------backoffice-----------
 //landingpage
 Route::get('backoffice/', [BackofficeDishController::class, 'landingpage'])->name('backoffice.landingpage');
 
@@ -28,7 +34,9 @@ Route::prefix('backoffice/dishes')->name('backoffice.dishes.')->controller(Backo
     //tabla de elementos
     Route::get('/', 'index')->name('index');
     //cambiar disponibilidad
-    Route::get('/disponible/{id}','disponible')->name('disponible');
+    Route::get('/available/{id}','available')->name('available');
+    //cambiar categoria
+    Route::get('/categories/{id}','categories')->name('categories');
     //formulario de creacion y edicion
     Route::get('/create/{id?}', 'create')->name('create');
     //metodo que crea

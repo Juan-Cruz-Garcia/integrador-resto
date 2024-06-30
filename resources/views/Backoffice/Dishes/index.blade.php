@@ -2,7 +2,7 @@
 
 @section('breadcrumb')
     @php
-        $unicodeCode = '&#x' . dechex(mt_rand(0x16A0, 0x16FF)) . ';';
+        $unicodeCode = '&#x' . dechex(mt_rand(0x16a0, 0x16ff)) . ';';
     @endphp
     <nav style="--bs-breadcrumb-divider: '{!! $unicodeCode !!}';" aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -17,15 +17,15 @@
 @endsection
 
 @section('content')
-@php
-    $categoryNames = [
-        1 => 'Entrada',
-        2 => 'Plato Principal',
-        3 => 'Acompañamiento',
-        4 => 'Postre',
-        5 => 'Bebida',
-    ];
-@endphp
+    @php
+        $categoryNames = [
+            1 => 'Entrada',
+            2 => 'Plato Principal',
+            3 => 'Acompañamiento',
+            4 => 'Postre',
+            5 => 'Bebida',
+        ];
+    @endphp
     <div class="container mt-5">
         <table class="table table-striped table-bordered rounded-5">
             <thead class="table-dark">
@@ -43,15 +43,36 @@
                 @if ($dishes->count() > 0)
                     @foreach ($dishes as $dish)
                         <tr>
-                            <td class="align-middle"><img src="{{ $dish->image }}?={{ $dish->id }}" alt="Producto" class="img-thumbnail" style="max-width: 200px; max-height: 250px;"></td>
+                            <td class="align-middle"><img src="/storage/{{ $dish->image }}" alt="Producto"
+                                    class="img-thumbnail" style="max-width: 200px; max-height: 250px;"></td>
                             <td class="align-middle">{{ $dish->name }}</td>
                             <td class="align-middle">{{ $dish->description }}</td>
-                            <td class="align-middle">{{ $categoryNames[$dish->category_id] }}</td>
+                            <td class="align-middle">
+                                <div>
+                                    <div class="dropdown">
+                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="orderDropdown"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            {{ $categoryNames[$dish->category_id] }} </button>
+                                            <ul class="dropdown-menu" aria-labelledby="orderDropdown">
+                                                @foreach ($categoryNames as $categoryId => $categoryName)
+                                                <li>
+                                                    <form action="{{ route('backoffice.dishes.categories', $dish->id) }}" method="get">
+                                                        @csrf
+                                                        <input type="hidden" name="category" value="{{ $categoryId }}">
+                                                        <button type="submit" class="dropdown-item">{{ $categoryName }}</button>
+                                                    </form>
+                                                </li>
+                                            @endforeach
+                                            </ul>
+                                    </div>
+                            </td>
                             <td class="align-middle">{{ $dish->is_available ? 'Sí' : 'No' }}</td>
                             <td class="align-middle">{{ $dish->price }}</td>
                             <td class="align-middle">
-                                <a href="/backoffice/dishes/create/{{ $dish->id }}" class="btn btn-primary btn-sm">Editar</a>
-                                <a href="{{ route('backoffice.dishes.disponible', $dish->id) }}" class="btn btn-sm {{ $dish->is_available ? 'btn-danger' : 'btn-success' }}">
+                                <a href="/backoffice/dishes/create/{{ $dish->id }}"
+                                    class="btn btn-primary btn-sm">Editar</a>
+                                <a href="{{ route('backoffice.dishes.available', $dish->id) }}"
+                                    class="btn btn-sm {{ $dish->is_available ? 'btn-danger' : 'btn-success' }}">
                                     {{ $dish->is_available ? 'Desactivar' : 'Activar' }}
                                 </a>
                                 <button class="btn btn-danger btn-sm">Borrar</button>
@@ -88,6 +109,7 @@
             </ul>
         </div>
 
-        <p class="text-muted text-center mt-2">Mostrando página {{ $dishes->currentPage() }} de {{ $dishes->lastPage() }}</p>
+        <p class="text-muted text-center mt-2">Mostrando página {{ $dishes->currentPage() }} de {{ $dishes->lastPage() }}
+        </p>
     </div>
 @endsection
