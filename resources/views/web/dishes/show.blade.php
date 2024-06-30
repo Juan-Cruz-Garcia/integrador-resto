@@ -38,7 +38,7 @@
                 </div>
             </div>
         @else
-            <p class="text-center">Plato disponible</p>
+            <p class="text-center">Plato no disponible</p>
         @endif
     </div>
 @endsection
