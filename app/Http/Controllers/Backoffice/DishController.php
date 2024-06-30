@@ -14,9 +14,19 @@ class DishController extends Controller
     }
     public function index()
     {
-        $dishes = Dish::paginate(6);
+        $dishes = Dish::orderBy('is_available', 'desc')->paginate(6);
         return view('backoffice.dishes.index', compact('dishes'));
     }
+    
+    public function disponible($id)
+{
+    $dish = Dish::find($id);
+    $dish->is_available = !$dish->is_available;
+    $dish->save();
+
+    return redirect()->route('backoffice.dishes.index');
+}
+
 
     public function create($id = null)
     {
