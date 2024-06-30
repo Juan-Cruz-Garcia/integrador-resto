@@ -26,15 +26,21 @@ class DishController extends Controller
     }
 
 
-    public function index()
+    public function index($category=null)
     {
-        // Filtrar los platos que están disponibles
-        $dishes = Dish::where('is_available', 1)->paginate(6);
-        if (request()->has($orderBy)) {
-            $dishes = Dish::where('is_available', 1)->-orderBy($orderBy)>paginate(6);
+        // Construir la consulta
+            $query = Dish::where('is_available', 1);
 
+        // Si se proporciona una categoría, filtrar por esa categoría
+        if ($category) {
+            $query->where('category_id', $category);
         }
-
+        if (request()->has('filtro')) {
+            $query->orderBy('price',request()->input('filtro'));
+        }
+    
+        // Paginar los resultados y obtener los platos
+        $dishes = $query->paginate(6);
         return view('web.dishes.index', compact('dishes'));
     }
 
@@ -44,4 +50,14 @@ class DishController extends Controller
         $dish = Dish::find($id);
         return view('web.dishes.show', compact('dish'));
     }
+
+
+    public function cart($cartItems=null)
+    {
+        return view('web.cart.add');
+    }
+
+
+
+
 }
