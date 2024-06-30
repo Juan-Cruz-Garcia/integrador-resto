@@ -20,9 +20,8 @@
               Categorías
           </a>
           <ul class="dropdown-menu" data-bs-theme="dark" aria-labelledby="navbarDropdownCategories">
-              <!-- Aquí puedes iterar sobre las categorías disponibles -->
               @foreach ($categories as $category)
-              <li><a class="dropdown-item" href="{{ route('web.dishes.index', ['category' => $category->id]) }}">{{ $category->value }}</a></li>
+              <li><a class="dropdown-item" href="{{ route('web.dishes.categories', ['category' => $category->id]) }}">{{ $category->value }}</a></li>
           @endforeach
           
           </ul>
