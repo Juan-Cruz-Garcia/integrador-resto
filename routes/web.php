@@ -27,6 +27,8 @@ Route::get('backoffice/', [BackofficeDishController::class, 'landingpage'])->nam
 Route::prefix('backoffice/dishes')->name('backoffice.dishes.')->controller(BackofficeDishController::class)->group(function () {
     //tabla de elementos
     Route::get('/', 'index')->name('index');
+    //cambiar disponibilidad
+    Route::get('/disponible/{id}','disponible')->name('disponible');
     //formulario de creacion y edicion
     Route::get('/create/{id?}', 'create')->name('create');
     //metodo que crea
