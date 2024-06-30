@@ -21,7 +21,7 @@
             <div class="card mb-3">
                 <div class="row g-0">
                     <div class="col-md-5">
-                        <img src="{{ $dish->image }}?={{ $dish->id }}" class="img-fluid rounded-start"
+                        <img src="/storage/{{ $dish->image }}?={{ $dish->id }}" class="img-fluid rounded-start"
                             alt="{{ $dish->image_alt }}">
                     </div>
                     <div class="col-md-7">

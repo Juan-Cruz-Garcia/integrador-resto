@@ -17,8 +17,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->tinyInteger('category_id')->unsigned()->index();
             $table->double('price',8.2)->nullable();
-            $table->string('image',300)->nullable();
-            $table->string('image_alt',100)->nullable();
+            $table->integer('image_id')->unsigned()->nullable()->index();
             $table->boolean('is_available')->default(true);            
             $table->timestamps();
         });

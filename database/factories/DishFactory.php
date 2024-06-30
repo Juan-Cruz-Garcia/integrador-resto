@@ -29,8 +29,6 @@ class DishFactory extends Factory
             'description' => $this->faker->paragraph(4, true),
             'category_id' => $categoryId,
             'price' => $this->faker->randomFloat(2, 800, 10000),
-            'image' => 'https://loremflickr.com/150/200/' . strtolower(str_replace(' ', '-', $categoryNames[$categoryId])),
-            'image_alt' => $this->faker->sentence(6, true),
             'is_available' => $this->faker->boolean(80),
         ];
     }
