@@ -43,7 +43,7 @@
                 @if ($dishes->count() > 0)
                     @foreach ($dishes as $dish)
                         <tr>
-                            <td class="align-middle"><img src="/storage/{{ $dish->image }}" alt="Producto"
+                            <td class="align-middle"><img src="/storage/{{ $dish?->image?->src }}" alt="Producto"
                                     class="img-thumbnail" style="max-width: 200px; max-height: 250px;"></td>
                             <td class="align-middle">{{ $dish->name }}</td>
                             <td class="align-middle">{{ $dish->description }}</td>

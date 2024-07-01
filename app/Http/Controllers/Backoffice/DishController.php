@@ -20,7 +20,10 @@ class DishController extends Controller
     public function index()
     {
         $dishes = Dish::orderBy('id', 'asc')->paginate(6);
-        return view('backoffice.dishes.index', compact('dishes'));
+        $image = Image::get();
+    
+        // dd($image);
+        return view('backoffice.dishes.index', compact('dishes', 'image'));
     }
     //formulario de creacion y edicion
     public function create($id = null)
@@ -56,36 +59,34 @@ class DishController extends Controller
 
     // guardar un producto
     public function store(Request $request, $id = null)
-    {
-        // Verifica si se está editando o creando un plato
-        $dish = $request->has('id') ? Dish::find($request->input('id')) : new Dish;
-    
-        // Inicializa la variable $image a null
-        $image = null;
-    
-        // Verifica si se ha subido una imagen
-        if ($request->hasFile('image')) {
-            $image = new Image;
-            $image->src = $request->file('image')->store('dishes');
-            $image->size = $request->file('image')->getSize();
-            $image->extension = $request->file('image')->getClientOriginalExtension();
-            $image->image_alt = $request->input('image_alt');
-            $image->save();
-    
-            // Asigna el id de la imagen al plato solo si se subió y guardó una imagen
-            $dish->image_id = $image->id;
+    {   
+        $size = $request->file('image')->getSize();
+        $extension = $request->file('image')->getClientOriginalExtension();
+        $src = $request->file('image')->store('dishes');
+        $image_alt = $request->input('image_alt');
+        $image = new Image;
+        $image->src = $src;
+        $image->size = $size;
+        $image->extension = $extension;
+        $image->image_alt = $image_alt;
+        $image->save(); 
+
+        if ($request->has('id') && $request->filled('id')) { // actualizar
+            $dish = Dish::find($request->input('id'));
+        } else { // crear
+            $dish = new Dish;
         }
-    
+        
         // Trae los datos del formulario
-        $dish->name = $request->input('name');
+        $dish->name = $request->input('name',null);
         $dish->description = $request->input('description');
         $dish->category_id = $request->input('category_id');
         $dish->price = $request->input('price');
         $dish->is_available = $request->boolean('is_available');
-    
+        // Asigna el id de la imagen al plato solo si se subió y guardó una imagen
+        $dish->image_id = $image->id;
         $dish->save();
-    
+
         return redirect()->route('backoffice.dishes.index');
     }
-    
 }

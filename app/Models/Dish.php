@@ -10,4 +10,13 @@ class Dish extends Model
 {
     use HasFactory;
     use SoftDeletes;
+public function image()
+{
+    return $this->belongsTo(Image::class);
 }
+
+
+
+
+}
+
