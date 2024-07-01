@@ -43,11 +43,10 @@
                     <label for="category_id" class="form-label">Categoría</label>
                     <select class="form-select" id="category_id" name="category_id">
                         <option value="">Seleccione una categoría</option>
-                        <option @if (isset($dish) && $dish->category_id == 1) selected @endif value="1">Entrada</option>
-                        <option @if (isset($dish) && $dish->category_id == 2) selected @endif value="2">Plato Principal</option>
-                        <option @if (isset($dish) && $dish->category_id == 3) selected @endif value="3">Acompañamiento</option>
-                        <option @if (isset($dish) && $dish->category_id == 4) selected @endif value="4">Postre</option>
-                        <option @if (isset($dish) && $dish->category_id == 5) selected @endif value="5">Bebida</option>
+                        @foreach ($categories as $category)
+                            <option @if (isset($dish) && $dish->category_id == '{{ $category->id }}') selected @endif value="{{ $category->id }}">
+                                {{ $category->value }}</option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="mb-3">
