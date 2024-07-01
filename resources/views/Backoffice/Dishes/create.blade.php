@@ -8,13 +8,8 @@
     <nav style="--bs-breadcrumb-divider: '{!! $unicodeCode !!}';" aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('backoffice.landingpage') }}">Inicio</a></li>
-
-            @if (isset($dish))
-                <li class="breadcrumb-item"><a href="{{ route('backoffice.dishes.index') }}">Platos</a></li>
-                <li class="breadcrumb-item active" aria-current="page">{{ $dish->id }}</li>
-            @else
-                <li class="breadcrumb-item active" aria-current="page">Agregar</li>
-            @endif
+            <li class="breadcrumb-item"><a href="{{ route('backoffice.dishes.index') }}">Platos</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Agregar</li>
         </ol>
     </nav>
 @endsection

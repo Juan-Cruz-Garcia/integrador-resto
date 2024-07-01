@@ -12,7 +12,7 @@ class DishSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\Dish::factory()->count(59)->create();
+        \App\Models\Dish::factory()->count(10)->create();
     }
 }
 // php artisan db:seed --class=DishSeeder
