@@ -25,7 +25,7 @@
             @foreach ($randomDishes as $dish)
                 <div class="col-md-4 mb-4">
                     <div class="card">
-                        <img src="/storage/{{ $dish->image }}" alt="{{ $dish->image_alt }}" class="img-fluid">
+                        <img src="/storage/{{ $dish?->image?->src }}" alt={{ $dish?->image?->image_alt }} class="img-fluid">
                         <div class="card-body">
                             <h5 class="card-title overflow-hidden text-truncate">{{ $dish->name }}</h5>
                             <p class="card-text overflow-hidden text-truncate">{{ $dish->description }}</p>

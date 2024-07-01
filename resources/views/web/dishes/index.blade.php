@@ -38,7 +38,7 @@
                         <li class="col-md-12 list-group-item border rounded p-3 m-1">
                             <div class="row">
                                 <div class="col-md-3">
-                                    <img src="/storage/{{ $dish->image }}?={{ $dish->id }}"
+                                    <img src="/storage/{{ $dish?->image?->src }}"
                                         alt="{{ $dish->image_alt }}" class="img-fluid">
                                 </div>
                                 <div class="col-md-9">

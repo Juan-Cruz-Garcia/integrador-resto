@@ -21,7 +21,7 @@
             <div class="card mb-3">
                 <div class="row g-0">
                     <div class="col-md-5">
-                        <img src="/storage/{{ $dish->image }}?={{ $dish->id }}" class="img-fluid rounded-start"
+                        <img src="/storage/{{ $dish?->image?->src }}" class="img-fluid rounded-start"
                             alt="{{ $dish->image_alt }}">
                     </div>
                     <div class="col-md-7">
@@ -30,7 +30,7 @@
                             <p class="card-text">{{ $dish->description }}</p>
                             <p class="card-text text-muted">Precio: ${{ $dish->price }}</p>
                             <div class="d-flex justify-content-between mt-auto">
-                                <a href="#" class="btn btn-primary">Agregar al carrito</a>
+                                <a href="/cart/add/{{ $dish->id }}" class="btn btn-primary">Agregar al carrito</a>
                                 <a href="{{ route('web.dishes.index') }}" class="btn btn-secondary">Volver</a>
                             </div>
                         </div>
