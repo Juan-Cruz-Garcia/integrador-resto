@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backoffice;
 
 use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Dish;
 use App\Models\Image;
@@ -33,7 +34,8 @@ class DishController extends Controller
         } else {
             $dish = new Dish;
         }
-        return view('backoffice.dishes.create', compact('dish'));
+        $categories = Category::all();
+        return view('backoffice.dishes.create', compact('dish','categories'));
     }
 
     //-----funcionalidades-------
