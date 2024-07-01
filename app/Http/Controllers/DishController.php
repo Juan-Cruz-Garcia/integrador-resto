@@ -51,6 +51,11 @@ class DishController extends Controller
         return view('web.dishes.show', compact('dish'));
     }
 
+    public function add($id)
+    {
+        session(['cart '=> $id]);
+        return redirect('web.dishes');
+    }
 
     public function cart($cartItems=null)
     {

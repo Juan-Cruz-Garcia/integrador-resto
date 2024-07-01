@@ -20,7 +20,12 @@ Route::prefix('dishes')->name('web.dishes.')->controller(DishController::class)-
       Route::get('/categories/{category}', 'index')->name('categories');
  
 });
-Route::get('/cart/add',[DishController::class,'cart'])->name('web.cart');
+//acciones
+Route::prefix('cart')->name('web.cart.')->controller(DishController::class)->group(function(){
+Route::get('/add/{id}',)->name('add');
+Route::post('/buy',)->name('buy');
+});
+
 
 //-------backoffice-----------
 //landingpage
