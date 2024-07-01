@@ -16,7 +16,7 @@
 @endsection
 
 @section('content')
-    <div class="container my-5">
+    <div class="container my-5"data-bs-theme="dark">
         @if ($dish && $dish->is_available==1)
             <div class="card mb-3">
                 <div class="row g-0">

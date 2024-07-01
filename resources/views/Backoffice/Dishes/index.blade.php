@@ -53,7 +53,7 @@
                                         <button class="btn btn-secondary dropdown-toggle" type="button" id="orderDropdown"
                                             data-bs-toggle="dropdown" aria-expanded="false">
                                             {{ $categoryNames[$dish->category_id] }} </button>
-                                            <ul class="dropdown-menu" aria-labelledby="orderDropdown">
+                                            <ul class="dropdown-menu dropdown-menu-start" aria-labelledby="orderDropdown">
                                                 @foreach ($categoryNames as $categoryId => $categoryName)
                                                 <li>
                                                     <form action="{{ route('backoffice.dishes.categories', $dish->id) }}" method="get">

@@ -20,7 +20,7 @@
 <!-- prductos destacados -->
 <section class="py-5 bg-white">
     <div class="container">
-        <div class="row">
+        <div class="row"data-bs-theme="dark">
             <h2>Los recomendados Pipin Mantelargo</h2>
             @foreach ($randomDishes as $dish)
                 <div class="col-md-4 mb-4">
@@ -44,7 +44,7 @@
 
     <!-- testimonios -->
     <section class="py-5 bg-light">
-        <div class="container">
+        <div class="container"data-bs-theme="dark">
             <div class="text-center mb-5">
                 <h2>Testimonios de Aventureros</h2>
             </div>
