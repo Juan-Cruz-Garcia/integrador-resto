@@ -5,6 +5,7 @@ use App\Http\Controllers\Backoffice\Request\FormController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\DishController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 
 //-------web-----------------
@@ -22,8 +23,10 @@ Route::prefix('dishes')->name('web.dishes.')->controller(DishController::class)-
 });
 //acciones
 Route::prefix('cart')->name('web.cart.')->controller(DishController::class)->group(function(){
-Route::get('/add/{id}',)->name('add');
-Route::post('/buy',)->name('buy');
+Route::post('/add/{id}','add')->name('add');
+Route::post('/remove/{id}','remove')->name('remove');
+Route::post('checkout/buy','buy')->name('checkout.buy');
+Route::get('checkout','checkout')->name('checkout');//vista chekout
 });
 
 
@@ -44,3 +47,7 @@ Route::prefix('backoffice/dishes')->name('backoffice.dishes.')->controller(Backo
     Route::post('/create/{id?}', 'store')->name('create');
    
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
