@@ -9,9 +9,7 @@
         <div class="container">
             <h1 class="display-4 primary">Bienvenido al Refugio del Pecador</h1>
             <p class="lead primary">Adéntrate en nuestra taberna, aventurero, y descubre los secretos que aguardan.</p>
-            <a href="{{ route('web.dishes.index') }}" class="btn btn-primary btn-lg mx-2">Explora</a>
-            <a href="#" class="btn btn-secondary btn-lg mx-2">Contacta</a>
-        </div>
+            <a href="{{ route('web.dishes.index') }}" class="btn btn-primary btn-lg mx-2">Explora</a>        </div>
     </section>
 @endsection
 
