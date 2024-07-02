@@ -17,3 +17,12 @@ php artisan serve --port=80
 
 7- linkear el storage a public
 php artisan storage:link
+
+8- ui
+npm install/ npm run build
+
+verificacion de formularios por request
+//php artisan make:request ModelRequest
+dentor del model hay uno que se llama rules y ahi se puede validar por nombres de variable 
+despues en el controlador para llamarlo se genera el metodo y
+//public function store(MovieRequest $request)
