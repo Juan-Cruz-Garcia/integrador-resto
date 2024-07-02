@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Dish;
 use App\Models\Category;
+use App\Models\Item;
+use App\Models\Sale;
 use Illuminate\Support\Facades\Auth;
 
 class DishController extends Controller
@@ -54,6 +56,10 @@ class DishController extends Controller
 
     public function add($id)
     {
+
+        if (!Auth::check()) {
+            return $this->landingpage();
+        }
         // Obtener el carrito de la sesión si no existe se inicializa como un array vacío
         $cart = session('cart', []);
 
@@ -72,6 +78,9 @@ class DishController extends Controller
     public function remove($id)
     {
 
+        if (!Auth::check()) {
+            return $this->landingpage();
+        }
         $cart = session('cart');
         if (isset($cart[$id])) {
             // Decrementar la cantidad del producto en el carrito
@@ -92,36 +101,79 @@ class DishController extends Controller
 
     public function checkout()
     {
+        if (!Auth::check()) {
+            return $this->landingpage();
+        }
+        $cart = session('cart');
         $dishes = [];
         $total = 0;
         $quantities = [];
         //dd(session('cart'));
-        if (session()->has('cart')) {
-            $dishes = Dish::whereIn('id', array_keys(session('cart')))->get();
-            $total = 0;
-            $quantities = [];
-            //dd($dishes);
-            foreach ($dishes as $dish) {
-                $quantities[$dish->id] = session('cart')[$dish->id];
-                //dd($dishes,$quantities);
-                $total += session('cart')[$dish->id] * $dish->price;
-            }
+        foreach ($cart as $id => $quantity) {
+            $dish = Dish::find($id);
+            $dishes[] = $dish;
+            $quantities[$id] = $quantity;
+            $total += $quantities[$id] * $dish->price;
         }
         //dd($dishes, $quantities, $total);
         return view('web.cart.checkout', compact('dishes', 'quantities', 'total'));
     }
+
+
+
+
     public function buy()
     {
+        //dd(Auth::check());
+        if (!Auth::check()) {
+            return $this->landingpage();
+        }
+        $cart = session('cart');
+        $total = 0;
+        $items = [];
 
-        //dd(session('cart'));
+        // Recorrer los elementos del carrito
+        foreach ($cart as $id => $quantity) {
+            $dish = Dish::find($id);
+            // Calcular el total acumulado
+            $total += $quantity * $dish->price;
+            // Crear un nuevo item
+            $items[] = new Item([
+                'dish_id' => $dish->id,
+                'quantity' => $quantity,
+                'price' => $dish->price,
+            ]);
+        }
+        //dd($total, $items,session());
+
+        // Crear una nueva venta
+        $sale = new Sale([
+            'user_id' => auth()->user()->id,
+            'total' => $total,
+        ]);
+        // Guardar la venta
+       $sale->save();
+
+        foreach ($items as $item) {
+            $item->sale_id = $sale->id;
+        }
+        
+        //dd($sale,$items);
+
+        // Guardar los items relacionados con la venta
+        $sale->items()->saveMany($items);
+
+        // Verificar los items guardados
+        //dd($sale->items);
+
         session()->remove('cart');
         return $this->index();
     }
+
 
     public function logout()
     {
         Auth::logout();
         return $this->landingpage();
     }
-
 }
