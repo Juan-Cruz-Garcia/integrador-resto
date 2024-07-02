@@ -29,20 +29,23 @@
 
                     </ul>
                 </li>
-                  <!-- Menú desplegable usuario -->
-                  <li class="nav-item dropdown">
+                <!-- Menú desplegable usuario -->
+                <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownCategories" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
-                        Aventurero
+                        {{ session()->has('usuario') ? session('usuario') : 'Aventurero' }}
                     </a>
                     <ul class="dropdown-menu" data-bs-theme="dark" aria-labelledby="navbarDropdownCategories">
-                      @if (session()->has('usuario'))
-                      <li><a class="dropdown-item" href="">{{ session('usuario') }}</a></li>
-                      <li><a class="dropdown-item" href="{{ route('cart.checkout') }}">carrito</a></li>
-                      @else
-                      <li><a class="dropdown-item" href="">iniciar sesison</a></li>
-                      <li><a class="dropdown-item" href="">registrarse</a></li>
-                      @endif
+                        @auth
+                            <form action="{{ route('web.cart.logout') }}" method="POST">
+                                @csrf
+                                <li><button type="submit" class="dropdown-item">Cerrar sesion</button></li>
+                            </form>
+                            <li><a class="dropdown-item" href="{{ route('web.cart.checkout') }}">Carrito</a></li>
+                        @else
+                            <li><a class="dropdown-item" href="{{ route('home') }}">Iniciar sesison</a></li>
+                            <li><a class="dropdown-item" href="">Registrarse</a></li>
+                        @endauth
                     </ul>
                 </li>
             </ul>

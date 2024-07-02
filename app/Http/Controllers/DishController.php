@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Dish;
 use App\Models\Category;
+use Illuminate\Support\Facades\Auth;
 
 class DishController extends Controller
 {
@@ -55,6 +56,7 @@ class DishController extends Controller
     {
         // Obtener el carrito de la sesión si no existe se inicializa como un array vacío
         $cart = session('cart', []);
+
         // Verificar si el producto ya está en el carrito
         if (!isset($cart[$id])) {
             // Si no está inicializa la cantidad del producto en 0
@@ -88,21 +90,38 @@ class DishController extends Controller
     }
 
 
-     public function checkout()
-     {
-         //dd(session('cart'));
-         $dishes = Dish::whereIn('id', array_keys(session('cart')))->get();
-         $total = 0;
-         $quantities = [];
-         //dd($dishes);
-         foreach ($dishes as $dish) {
-             $quantities[$dish->id] = session('cart')[$dish->id];
-             //dd($dishes,$quantities);
-             $total += session('cart')[$dish->id] * $dish->price;
-         }
-      
-         //dd($dishes, $quantities, $total);
-         return view('web.cart.checkout', compact('dishes', 'quantities', 'total'));
-     }
+    public function checkout()
+    {
+        $dishes = [];
+        $total = 0;
+        $quantities = [];
+        //dd(session('cart'));
+        if (session()->has('cart')) {
+            $dishes = Dish::whereIn('id', array_keys(session('cart')))->get();
+            $total = 0;
+            $quantities = [];
+            //dd($dishes);
+            foreach ($dishes as $dish) {
+                $quantities[$dish->id] = session('cart')[$dish->id];
+                //dd($dishes,$quantities);
+                $total += session('cart')[$dish->id] * $dish->price;
+            }
+        }
+        //dd($dishes, $quantities, $total);
+        return view('web.cart.checkout', compact('dishes', 'quantities', 'total'));
+    }
+    public function buy()
+    {
+
+        //dd(session('cart'));
+        session()->remove('cart');
+        return $this->index();
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+        return $this->landingpage();
+    }
 
 }
