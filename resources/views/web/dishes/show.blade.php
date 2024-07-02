@@ -1,7 +1,7 @@
 @extends('web.layout.app')
 
 @section('breadcrumb')
-    @if ($dish && $dish->is_available==1)
+    @if ($dish && $dish->is_available == 1)
         @php
             $unicodeCode = '&#x' . dechex(mt_rand(0x16a0, 0x16ff)) . ';';
         @endphp
@@ -17,7 +17,7 @@
 
 @section('content')
     <div class="container my-5"data-bs-theme="dark">
-        @if ($dish && $dish->is_available==1)
+        @if ($dish && $dish->is_available == 1)
             <div class="card mb-3">
                 <div class="row g-0">
                     <div class="col-md-5">
@@ -30,9 +30,27 @@
                             <p class="card-text">{{ $dish->description }}</p>
                             <p class="card-text text-muted">Precio: ${{ $dish->price }}</p>
                             <div class="d-flex justify-content-between mt-auto">
-                                <a href="/cart/add/{{ $dish->id }}" class="btn btn-primary">Agregar al carrito</a>
-                                <a href="{{ route('web.dishes.index') }}" class="btn btn-secondary">Volver</a>
+                                <div class="d-inline-block">
+                                    <form action="{{ route('web.cart.add', $dish->id) }}" method="POST" id="add-to-cart-form">
+                                        @csrf
+                                        <input type="hidden" name="id" value="{{ $dish->id }}"> 
+                                        <button type="submit" class="btn btn-primary">Agregar al carrito</button>
+                                    </form>
+                                </div>
+                                <div class="d-inline-block">
+                                    @if(session()->has('cart') && array_key_exists($dish->id, session('cart')))
+                                        <form action="{{ route('web.cart.remove', $dish->id) }}" method="POST" id="remove-from-cart-form">
+                                            @csrf
+                                            <input type="hidden" name="id" value="{{ $dish->id }}"> 
+                                            <button type="submit" class="btn btn-danger">Quitar del carrito</button>
+                                        </form>
+                                    @endif
+                                </div>
+                                <div>
+                                    <a href="{{ route('web.dishes.index') }}" class="btn btn-secondary">Volver</a>
+                                </div>
                             </div>
+                            
                         </div>
                     </div>
                 </div>

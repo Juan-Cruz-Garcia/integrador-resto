@@ -26,19 +26,19 @@ class DishController extends Controller
     }
 
 
-    public function index($category=null)
+    public function index($category = null)
     {
         // Construir la consulta
-            $query = Dish::where('is_available', 1);
+        $query = Dish::where('is_available', 1);
 
         // Si se proporciona una categoría, filtrar por esa categoría
         if ($category) {
             $query->where('category_id', $category);
         }
         if (request()->has('filtro')) {
-            $query->orderBy('price',request()->input('filtro'));
+            $query->orderBy('price', request()->input('filtro'));
         }
-    
+
         // Paginar los resultados y obtener los platos
         $dishes = $query->paginate(6);
         return view('web.dishes.index', compact('dishes'));
@@ -53,16 +53,56 @@ class DishController extends Controller
 
     public function add($id)
     {
-        session(['cart '=> $id]);
-        return redirect('web.dishes');
+        // Obtener el carrito de la sesión si no existe se inicializa como un array vacío
+        $cart = session('cart', []);
+        // Verificar si el producto ya está en el carrito
+        if (!isset($cart[$id])) {
+            // Si no está inicializa la cantidad del producto en 0
+            $cart[$id] = 0;
+        }
+        // Incrementar la cantidad del producto
+        $cart[$id]++;
+        // Guardar el carrito actualizado en la sesión
+        session(['cart' => $cart]);
+        // Redirigir de vuelta a la página de platos
+        return redirect()->route('web.cart.checkout');
     }
-
-    public function cart($cartItems=null)
+    public function remove($id)
     {
-        return view('web.cart.add');
+
+        $cart = session('cart');
+        if (isset($cart[$id])) {
+            // Decrementar la cantidad del producto en el carrito
+            $cart[$id]--;
+
+            // Si la cantidad llega a 0 o menos, eliminar el producto del carrito
+            if ($cart[$id] <= 0) {
+                unset($cart[$id]);
+            }
+
+            // Guardar el carrito actualizado en la sesión
+            session(['cart' => $cart]);
+        }
+        // Redirigir de vuelta a la página de platos
+        return redirect()->back();
     }
 
 
-
+     public function checkout()
+     {
+         //dd(session('cart'));
+         $dishes = Dish::whereIn('id', array_keys(session('cart')))->get();
+         $total = 0;
+         $quantities = [];
+         //dd($dishes);
+         foreach ($dishes as $dish) {
+             $quantities[$dish->id] = session('cart')[$dish->id];
+             //dd($dishes,$quantities);
+             $total += session('cart')[$dish->id] * $dish->price;
+         }
+      
+         //dd($dishes, $quantities, $total);
+         return view('web.cart.checkout', compact('dishes', 'quantities', 'total'));
+     }
 
 }
