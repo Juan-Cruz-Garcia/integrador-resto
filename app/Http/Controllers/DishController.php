@@ -104,16 +104,21 @@ class DishController extends Controller
         if (!Auth::check()) {
             return $this->landingpage();
         }
+
         $cart = session('cart');
         $dishes = [];
         $total = 0;
         $quantities = [];
         //dd(session('cart'));
-        foreach ($cart as $id => $quantity) {
-            $dish = Dish::find($id);
-            $dishes[] = $dish;
-            $quantities[$id] = $quantity;
-            $total += $quantities[$id] * $dish->price;
+        if (session('cart')) {
+            foreach ($cart as $id => $quantity) {
+                $dish = Dish::find($id);
+                $dishes[] = $dish;
+                $quantities[$id] = $quantity;
+                $total += $quantities[$id] * $dish->price;
+            }
+
+
         }
         //dd($dishes, $quantities, $total);
         return view('web.cart.checkout', compact('dishes', 'quantities', 'total'));
@@ -157,7 +162,7 @@ class DishController extends Controller
         foreach ($items as $item) {
             $item->sale_id = $sale->id;
         }
-        
+
         //dd($sale,$items);
 
         // Guardar los items relacionados con la venta
