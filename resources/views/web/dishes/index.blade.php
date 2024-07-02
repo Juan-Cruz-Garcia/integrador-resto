@@ -12,7 +12,7 @@
     </nav>
 @endsection
 
-@section('title', 'Menú del Restaurante')
+@section('title', 'Pergamino de Delicias')
 
 @section('content')
     <div class="container mb-3">
