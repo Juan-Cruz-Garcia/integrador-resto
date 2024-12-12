@@ -44,7 +44,7 @@
                             <li><a class="dropdown-item" href="{{ route('web.cart.checkout') }}">Carrito</a></li>
                         @else
                             <li><a class="dropdown-item" href="{{ route('home') }}">Iniciar sesison</a></li>
-                            <li><a class="dropdown-item" href="">Registrarse</a></li>
+                            <li><a class="dropdown-item" href="{{ route('register') }}">Registrarse</a></li>
                         @endauth
                     </ul>
                 </li>
